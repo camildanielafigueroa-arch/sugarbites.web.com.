@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SugarBites | Un antojo, mil combinaciones</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+:root{
+  --wine:#781b22;
+  --wine2:#9a3038;
+  --ink:#30221b;
+  --cream:#fbf7ed;
+  --paper:#fffdf8;
+  --sand:#e9dfcf;
+  --muted:#827366;
+  --blush:#f2e1dc;
+  --green:#2f6b3c;
+  --green-bg:#e7f5ea;
+  --warn:#9a5b13;
+  --warn-bg:#fef3e2;
+  --info:#1d5c8c;
+  --info-bg:#e6f2fb;
+  --err:#9e232b;
+  --err-bg:#fdeaea;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'DM Sans',sans-serif;padding-bottom:85px;}
+.top{background:var(--wine);color:#fff;text-align:center;padding:10px;font-size:10px;letter-spacing:2px;font-weight:700}
+header{max-width:1180px;margin:auto;padding:20px 26px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--wine);text-decoration:none}
+.monogram{width:43px;height:43px;border:1px solid var(--wine);border-radius:50%;display:grid;place-items:center;font:26px Georgia}
+.brand b{font:700 25px 'Playfair Display';display:block}
+.brand small{display:block;text-align:center;font-size:9px;letter-spacing:4px;font-weight:800}
+nav{display:flex;gap:25px;align-items:center}
+nav button{background:none;border:0;color:var(--ink);font:700 13px 'DM Sans';cursor:pointer;padding:8px 0}
+nav button:hover,nav button.active{color:var(--wine);border-bottom:2px solid var(--wine)}
+.btn{background:var(--wine);color:#fff;border:0;border-radius:999px;padding:13px 20px;font:700 13px 'DM Sans';cursor:pointer;transition:.18s}
+.btn:hover{background:var(--wine2)}
+.btn:active{transform:scale(.97)}
+.btn.outline{background:transparent;border:1px solid #cbb8a7;color:var(--wine)}
+.btn.danger-outline{background:transparent;border:1px solid #d49a9e;color:var(--err)}
+.btn.danger-outline:hover{background:var(--err-bg)}
+.btn.success{background:var(--green);color:#fff}
+main{max-width:1180px;margin:auto;padding:0 26px 70px}
+.view{display:none;animation:viewEnter .3s ease both}
+.view.active{display:block}
+@keyframes viewEnter{from{opacity:.5;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* Hero & Cards */
+.hero{margin:15px 0 35px;background:linear-gradient(115deg,#f3e3dc,#f8f0e5 58%,#e8c9bf);border-radius:28px;min-height:400px;display:grid;grid-template-columns:1.08fr .92fr;overflow:hidden}
+.hero-copy{padding:56px 20px 50px 56px;align-self:center}
+.eyebrow{font-size:10px;letter-spacing:2.5px;color:var(--wine);font-weight:800;text-transform:uppercase}
+h1{font:600 clamp(40px,5vw,64px)/1.04 'Playfair Display';color:var(--wine);margin:15px 0}
+.hero-copy p{max-width:450px;line-height:1.8;color:#6c594c;font-size:14px}
+.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:24px}
+.hero-visual{display:grid;place-items:center;position:relative;min-height:320px;background:radial-gradient(circle at 50% 50%,#fff8ee 0 34%,transparent 35%)}
+.circle{position:absolute;width:280px;height:280px;border-radius:50%;background:#e8c4b8}
+.float{position:absolute;background:#fffdf8;padding:12px 15px;border-radius:13px;box-shadow:0 10px 25px #4a24151a;font-size:11px;font-weight:800}
+.float.one{top:18%;left:6%}
+.float.two{right:6%;bottom:18%}
+
+.section-head{margin:26px 0 18px}
+.section-head h2{font:600 34px 'Playfair Display';color:var(--wine);margin:6px 0}
+.section-head p{color:var(--muted);font-size:13px;margin:0}
+
+.category-grid,.product-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.category{border:1px solid var(--sand);background:var(--paper);border-radius:20px;overflow:hidden;cursor:pointer;transition:.2s}
+.category:hover{transform:translateY(-3px);box-shadow:0 15px 30px #43271912}
+.category-art{height:200px;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 42%,#fff9f1 0 27%,transparent 28%),linear-gradient(135deg,#f7e9df,#ead2c8)}
+.category:nth-child(2) .category-art{background:radial-gradient(circle at 50% 45%,#fffaf0 0 26%,transparent 27%),linear-gradient(135deg,#f7eddf,#e8d0b8)}
+.category-info{padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
+.category-info h3{font:600 24px 'Playfair Display';color:var(--wine);margin:0 0 4px}
+.category-info p{margin:0;color:var(--muted);font-size:12px}
+.arrow{width:38px;height:38px;border-radius:50%;background:var(--wine);color:white;display:grid;place-items:center;font-size:18px}
+
+.product{background:var(--paper);border:1px solid var(--sand);border-radius:18px;padding:18px;display:grid;grid-template-columns:105px 1fr;gap:16px;align-items:center}
+.product-art{height:105px;border-radius:13px;background:linear-gradient(135deg,#f7e8df,#ecd3c9);display:grid;place-items:center;position:relative;overflow:hidden}
+.product h3{margin:0 0 5px;color:var(--wine);font:600 20px 'Playfair Display'}
+.product p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+.product-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:11px}
+.price{font-weight:800;color:var(--wine);font-size:18px}
+.plus{border:0;background:var(--wine);color:#fff;border-radius:50%;width:34px;height:34px;font-size:20px;cursor:pointer}
+
+.custom-banner{margin:32px 0 18px;padding:22px;border-radius:18px;background:#f1e5d8;display:flex;justify-content:space-between;align-items:center;gap:15px}
+.custom-banner h3{font:600 24px 'Playfair Display';color:var(--wine);margin:0 0 4px}
+.custom-banner p{font-size:12px;color:var(--muted);margin:0}
+.builder{display:grid;grid-template-columns:1.25fr .75fr;gap:17px;align-items:start}
+.panel{background:var(--paper);border:1px solid var(--sand);border-radius:19px;padding:22px}
+.panel h3{font:600 22px 'Playfair Display';color:var(--wine);margin:0 0 14px}
+.field{display:block;font-size:12px;font-weight:800;margin:16px 0 7px}
+.select,input{width:100%;padding:12px;border:1px solid var(--sand);border-radius:10px;background:#fffefa;font:13px 'DM Sans';color:var(--ink)}
+
+/* Contadores de ingredientes con + y - */
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.opt-stepper{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid #eee3d8;border-radius:12px;padding:9px 11px;font-size:12px;background:#fff;min-height:50px;transition:.15s}
+.opt-stepper.has-qty{border-color:var(--wine);background:#fff9f8}
+.opt-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+.opt-name{font-weight:700;color:var(--ink);line-height:1.25}
+.opt-price{color:var(--wine);font-weight:800;font-size:11px}
+.stepper-btns{display:inline-flex;align-items:center;gap:7px;flex-shrink:0}
+.stepper-btns button{width:28px;height:28px;border-radius:50%;border:1px solid #d9cbbd;background:var(--cream);color:var(--wine);font-weight:800;font-size:15px;cursor:pointer;display:grid;place-items:center;padding:0;transition:.15s}
+.stepper-btns button:hover:not(:disabled){background:var(--wine);color:#fff;border-color:var(--wine)}
+.stepper-btns button:disabled{opacity:.32;cursor:not-allowed}
+.stepper-qty{min-width:18px;text-align:center;font-weight:800;font-size:13px;color:var(--ink)}
+
+.capacity-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.cap-badge{background:#f5ebe0;border:1px solid #e2d1bf;border-radius:999px;padding:6px 12px;font-size:11px;font-weight:800;color:var(--ink)}
+.cap-badge.full{background:var(--blush);border-color:var(--wine);color:var(--wine)}
+
+.summary{position:sticky;top:15px;border:1px solid #d9c2b2}
+.sumrow{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--sand);font-size:12px;color:var(--muted)}
+.total{display:flex;justify-content:space-between;align-items:center;margin:18px 0}
+.total strong{font-size:26px;color:var(--wine)}
+.hint{font-size:12px;line-height:1.6;color:var(--muted)}
+.wide{width:100%}
+.tray-options{display:grid;gap:9px;margin:14px 0}
+.tray-options details{border:1px solid var(--sand);border-radius:12px;background:#fffefa;overflow:hidden}
+.tray-options summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 15px;font-size:13px;font-weight:800;color:var(--wine)}
+.tray-options summary::-webkit-details-marker{display:none}
+.tray-options summary:after{content:"＋";font-size:17px;color:var(--wine)}
+.tray-options details[open] summary:after{content:"−"}
+.tray-options .item-price{margin-left:auto;color:var(--muted);font-size:11px;font-weight:700}
+.tray-options .opts{padding:0 12px 13px}
+.live-breakdown{display:grid;gap:7px;margin:12px 0 4px;max-height:220px;overflow:auto}
+.breakdown-line{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 10px;background:#fbf3eb;border-radius:9px;font-size:11px}
+.breakdown-line b{color:var(--wine)}
+
+/* Carrito */
+.order-card{max-width:620px;margin:0 auto;background:var(--paper);border:1px solid var(--sand);border-radius:18px;padding:22px 24px;box-shadow:0 12px 32px #43271910}
+.order-card-head{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--sand);padding:0 0 14px;margin-bottom:14px}
+.order-card-head h3{font:700 18px 'DM Sans';margin:0}
+.order-item{background:#fffefa;border:1px solid var(--sand);border-radius:14px;padding:14px 16px;margin:10px 0}
+.order-item-main{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.order-item small{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+.order-item-footer{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.qty-control{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:13px}
+.qty-control button{width:28px;height:28px;border:1px solid #d9cbbd;border-radius:50%;background:var(--cream);color:var(--wine);font-weight:800;cursor:pointer}
+.remove{border:0;background:none;color:var(--wine);font-size:12px;font-weight:700;cursor:pointer}
+.order-total{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--sand);margin-top:14px;padding:16px 2px 18px;font-weight:700;font-size:16px}
+.order-total strong{font-size:22px;color:var(--wine)}
+.checkout-details{max-width:620px;margin:18px auto 0}
+.checkout-details[hidden]{display:none!important}
+
+/* PANTALLA DE TRANSFERENCIA NARANJA X */
+.transfer-card{max-width:600px;margin:20px auto;background:var(--paper);border:1px solid var(--sand);border-radius:22px;padding:26px 22px;box-shadow:0 14px 36px #43271912}
+.status-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.3px;margin-bottom:12px}
+.status-pill.PENDIENTE_PAGO{background:var(--warn-bg);color:var(--warn)}
+.status-pill.COMPROBANTE_ENVIADO{background:var(--info-bg);color:var(--info)}
+.status-pill.PAGO_VERIFICADO{background:var(--green-bg);color:var(--green)}
+.status-pill.CANCELADO{background:var(--err-bg);color:var(--err)}
+
+.bank-box{background:#fbf5ee;border:1.5px solid #e3cfbe;border-radius:16px;padding:18px;margin:18px 0}
+.bank-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px dashed #dfcbb9}
+.bank-row:last-child{border-bottom:0;padding-bottom:0}
+.bank-row:first-child{padding-top:0}
+.bank-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.bank-val{font-size:15px;font-weight:800;color:var(--ink);word-break:break-all;margin-top:2px}
+.bank-val.amount-highlight{font-size:22px;color:var(--wine)}
+.copy-btn{background:#fff;border:1px solid var(--wine);color:var(--wine);border-radius:999px;padding:8px 14px;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:.15s}
+.copy-btn:hover{background:var(--wine);color:#fff}
+.copy-btn.copied{background:var(--green);border-color:var(--green);color:#fff}
+
+.upload-zone{border:2px dashed #cbb8a7;border-radius:16px;padding:20px;text-align:center;background:#fffefa;margin:18px 0;transition:.2s}
+.upload-zone.has-file{border-color:var(--green);background:#f5fbf6}
+.upload-label{display:inline-block;background:var(--blush);color:var(--wine);font-weight:800;font-size:13px;padding:10px 18px;border-radius:999px;cursor:pointer;margin-top:8px}
+.receipt-preview{max-width:100%;max-height:220px;border-radius:12px;margin-top:12px;border:1px solid var(--sand);display:none}
+.notice-banner{background:#f4eae0;border-left:4px solid var(--wine);padding:13px 15px;border-radius:8px;font-size:12px;line-height:1.6;color:#5c473b;margin:16px 0}
+
+/* Panel Admin */
+.admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;margin-top:18px}
+.admin-card{background:var(--paper);border:1px solid var(--sand);border-radius:16px;padding:18px}
+.admin-card.verified{border:2px solid var(--green);background:#f4fbf6}
+.admin-card.sent{border:2px solid var(--info);background:#f4f9fd}
+.admin-filters{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.filter-chip{border:1px solid var(--sand);background:var(--paper);padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer}
+.filter-chip.active{background:var(--wine);color:#fff;border-color:var(--wine)}
+
+/* Ilustraciones */
+.art-stage{position:absolute;inset:0;display:grid;place-items:center}
+.tray-illustration{position:relative;width:240px;height:140px;transform:rotate(-7deg);filter:drop-shadow(0 15px 12px #6c3d3025)}
+.tray-illustration:before{content:"";position:absolute;inset:16px 4px 8px;background:linear-gradient(145deg,#fffdf7,#e8d8c8);border:7px solid #fff;border-radius:28px}
+.treat{position:absolute;z-index:2;width:44px;height:35px;border-radius:13px;background:linear-gradient(145deg,#a94e37,#71301f)}
+.treat.t1{left:35px;top:36px;transform:rotate(12deg)}
+.treat.t2{left:88px;top:30px;background:linear-gradient(145deg,#f1c7a0,#b86d48);transform:rotate(-8deg)}
+.treat.t3{right:45px;top:40px;background:linear-gradient(145deg,#6d392d,#321d1a);transform:rotate(9deg)}
+.cup-illustration{position:relative;width:140px;height:160px;filter:drop-shadow(0 13px 12px #6c3d3028)}
+.cup-illustration:before{content:"";position:absolute;left:15px;right:15px;top:25px;bottom:0;background:linear-gradient(#f9d9c6 0 20%,#d94d58 20% 47%,#fff0dd 47% 70%,#c83b49 70%);border:5px solid #fff;border-radius:12px 12px 28px 28px;clip-path:polygon(0 0,100% 0,86% 100%,14% 100%)}
+.hero-cup{transform:scale(1.25) rotate(4deg)}
+.product-art .tray-illustration{transform:scale(.42) rotate(-7deg)}
+.product-art .cup-illustration{transform:scale(.6)}
+
+.cart-toast{position:fixed;left:50%;bottom:85px;transform:translate(-50%,20px);background:var(--wine);color:#fff;padding:12px 20px;border-radius:999px;box-shadow:0 10px 30px #30120f35;font-size:13px;font-weight:700;opacity:0;pointer-events:none;transition:.22s;z-index:1001;text-align:center;max-width:calc(100% - 30px)}
+.cart-toast.show{opacity:1;transform:translate(-50%,0)}
+.floating-bar{position:fixed;bottom:0;left:0;width:100%;background:white;padding:12px 24px;box-shadow:0 -4px 20px rgba(0,0,0,0.1);display:flex;justify-content:space-between;align-items:center;z-index:1000;border-top:1px solid var(--sand);transition:transform 0.3s ease}
+.floating-bar.hidden{transform:translateY(100%)}
+.floating-bar .floating-total{font-weight:800;font-size:20px;color:var(--wine)}
+.step-nav{display:flex;justify-content:space-between;margin-bottom:18px;gap:10px}
+.step-nav button{padding:8px 16px;font-size:12px}
+
+footer{background:#30201a;color:#f8eee4;text-align:center;padding:32px 15px}
+footer b{font:600 26px 'Playfair Display'}
+footer p{font-size:10px;letter-spacing:2px;color:#cdbbb0}
+
+@media(max-width:760px){
+  header{padding:15px;flex-wrap:wrap}
+  nav{order:3;width:100%;justify-content:center;gap:14px}
+  main{padding:0 14px 50px}
+  .hero,.product-grid,.category-grid,.builder,.opts{grid-template-columns:1fr}
+  .hero-copy{padding:32px 22px 0}
+  .transfer-card{padding:20px 16px}
+  .bank-row{flex-direction:column;align-items:flex-start;gap:8px}
+  .copy-btn{width:100%;text-align:center}
+  .summary{position:static}
+}
+</style>
+</head>
+<body>
+<div class="top">SUGARBITES · TRANSFERENCIA DIRECTA A NARANJA X</div>
+<header>
+  <a class="brand" href="#" onclick="showView('home');return false"><span class="monogram">S</span><span><b>SugarBites</b><small>DESSERTS & MORE</small></span></a>
+  <nav>
+    <button class="active" data-nav="home" onclick="showView('home')">INICIO</button>
+    <button data-nav="menu" onclick="showView('menu')">MENÚ</button>
+    <button data-nav="bandejas" onclick="showView('bandejas')">BANDEJAS</button>
+    <button data-nav="vasos" onclick="showView('vasos')">VASOS</button>
+  </nav>
+  <div style="display:flex;gap:8px;align-items:center">
+    <button id="btnActiveOrderHeader" class="btn outline" style="display:none;padding:10px 14px;font-size:12px" onclick="showView('paymentView')">Mi pedido activo</button>
+    <button class="btn" onclick="showView('cart')">Carrito (<span id="headerCount">0</span>) 🛒</button>
+  </div>
+</header>
+
+<main>
+  <!-- INICIO -->
+  <section id="home" class="view active">
+    <div class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Bienvenidos a SugarBites</div>
+        <h1>Pequeños gustos,<br>grandes momentos.</h1>
+        <p>Elegí tus bandejas o vasos dulces favoritos y aboná por transferencia directa a nuestra cuenta compartida de Naranja X. Apenas verifiquemos el ingreso, preparamos tu pedido.</p>
+        <div class="actions">
+          <button class="btn" onclick="showView('menu')">Explorar menú</button>
+          <button class="btn outline" onclick="showView('bandejas')">Armar mi bandeja</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="circle"></div>
+        <div class="cup-illustration hero-cup"></div>
+        <div class="float one">♡ Preparado para vos</div>
+        <div class="float two">UN ANTOJO, MIL COMBINACIONES</div>
+      </div>
+    </div>
+    <div class="category-grid">
+      <article class="category" onclick="showView('bandejas')">
+        <div class="category-art"><div class="art-stage"><div class="tray-illustration"><i class="treat t1"></i><i class="treat t2"></i><i class="treat t3"></i></div></div></div>
+        <div class="category-info"><div><h3>Bandejas</h3><p>Clásicas y personalizables</p></div><span class="arrow">→</span></div>
+      </article>
+      <article class="category" onclick="showView('vasos')">
+        <div class="category-art"><div class="art-stage"><div class="cup-illustration"></div></div></div>
+        <div class="category-info"><div><h3>Vasos</h3><p>Clásicos y personalizables</p></div><span class="arrow">→</span></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- MENÚ -->
+  <section id="menu" class="view">
+    <div class="step-nav"><button class="btn outline" onclick="showView('home')">⬅ Volver</button></div>
+    <div class="section-head">
+      <div class="eyebrow">Todo lo rico está acá</div>
+      <h2>Nuestro menú</h2>
+    </div>
+    <div class="category-grid">
+      <article class="category" onclick="showView('bandejas')">
+        <div class="category-art"><div class="art-stage"><div class="tray-illustration"><i class="treat t1"></i><i class="treat t2"></i><i class="treat t3"></i></div></div></div>
+        <div class="category-info"><div><h3>Bandejas</h3><p>Bandeja clásica · Bandeja choco · Personalizá la tuya</p></div><span class="arrow">→</span></div>
+      </article>
+      <article class="category" onclick="showView('vasos')">
+        <div class="category-art"><div class="art-stage"><div class="cup-illustration"></div></div></div>
+        <div class="category-info"><div><h3>Vasos</h3><p>Vaso chico · Vaso grande · Personalizá el tuyo</p></div><span class="arrow">→</span></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- BANDEJAS -->
+  <section id="bandejas" class="view">
+    <div class="step-nav"><button class="btn outline" onclick="showView('menu')">⬅ Volver al menú</button></div>
+    <div class="section-head">
+      <div class="eyebrow">Para compartir</div>
+      <h2>Nuestras bandejas</h2>
+    </div>
+    <div class="product-grid">
+      <article class="product">
+        <div class="product-art"><div class="tray-illustration"><i class="treat t1"></i><i class="treat t2"></i></div></div>
+        <div><h3>Bandeja clásica</h3><p>Frutillas, brownie, trufas, mini pancakes y mini waffles.</p><div class="product-bottom"><span class="price">$16.500</span><button class="plus" onclick="quickAdd('Bandeja clásica',16500)">+</button></div></div>
+      </article>
+      <article class="product">
+        <div class="product-art"><div class="tray-illustration"><i class="treat t2"></i><i class="treat t3"></i></div></div>
+        <div><h3>Bandeja choco</h3><p>Brownie, Oreo, trufa, Ferrero y confites de chocolate.</p><div class="product-bottom"><span class="price">$19.500</span><button class="plus" onclick="quickAdd('Bandeja choco',19500)">+</button></div></div>
+      </article>
+    </div>
+    <div class="custom-banner">
+      <div><h3>¿Preferís elegir cada detalle?</h3><p>La bandeja tiene <b>5 compartimentos</b> de sólidos + <b>1 salsa obligatoria</b> (hasta 12 salsas en total).</p></div>
+      <button class="btn" onclick="document.getElementById('bandejaBuilder').scrollIntoView({behavior:'smooth'})">Personalizar ↓</button>
+    </div>
+    <div id="bandejaBuilder" class="builder">
+      <div class="panel">
+        <h3>Armá tu bandeja</h3>
+        <div class="capacity-badges">
+          <span id="trayCompartmentsBadge" class="cap-badge">Sólidos: 0 / 5</span>
+          <span id="traySaucesBadge" class="cap-badge">Salsas (Mín. 1): 0 / 12</span>
+        </div>
+        <div class="tray-options">
+          <details open><summary><span>Bases clásicas (Compartimentos sólidos)</span><span class="item-price">$3.500 c/u</span></summary><div class="opts" id="trayClassic"></div></details>
+          <details><summary><span>Bases especiales (Compartimentos sólidos)</span><span class="item-price">$7.500 c/u</span></summary><div class="opts" id="trayPremium"></div></details>
+          <details><summary><span>Frutas (Compartimentos sólidos)</span><span class="item-price">$4.500 c/u</span></summary><div class="opts" id="trayFruits"></div></details>
+          <details open><summary><span>Salsas clásicas (Obligatorio mín. 1)</span><span class="item-price">$2.000 c/u</span></summary><div class="opts" id="trayClassicSauces"></div></details>
+          <details><summary><span>Salsas especiales (Opcional · Máx. 12)</span><span class="item-price">$3.000 c/u</span></summary><div class="opts" id="trayPremiumSauces"></div></details>
+        </div>
+      </div>
+      <aside class="panel summary">
+        <h3>Tu bandeja</h3>
+        <div class="sumrow"><span>Compartimentos sólidos</span><b id="trayCompCount">0 / 5</b></div>
+        <div class="sumrow"><span>Salsas (Mín. 1)</span><b id="traySauceCount">0 (Mín. 1 req.)</b></div>
+        <div id="trayBreakdown" class="live-breakdown"></div>
+        <div class="total"><span>Total estimado</span><strong id="trayTotal">$0</strong></div>
+        <p class="hint">Recordá que debés completar los 5 sólidos y elegir al menos 1 salsa para poder agregarla.</p>
+        <button class="btn wide" onclick="addTray(true)">Agregar bandeja al carrito ↗</button>
+      </aside>
+    </div>
+  </section>
+
+  <!-- VASOS -->
+  <section id="vasos" class="view">
+    <div class="step-nav"><button class="btn outline" onclick="showView('menu')">⬅ Volver al menú</button></div>
+    <div class="section-head">
+      <div class="eyebrow">Un clásico que nunca falla</div>
+      <h2>Nuestros vasos</h2>
+    </div>
+    <div class="product-grid">
+      <article class="product">
+        <div class="product-art"><div class="cup-illustration"></div></div>
+        <div><h3>Vaso chico clásico</h3><p>Frutilla y crema, el clásico de siempre.</p><div class="product-bottom"><span class="price">$10.000</span><button class="plus" onclick="quickAdd('Vaso chico clásico',10000)">+</button></div></div>
+      </article>
+      <article class="product">
+        <div class="product-art"><div class="cup-illustration"></div></div>
+        <div><h3>Vaso grande clásico</h3><p>Frutilla y crema, para disfrutar un poquito más.</p><div class="product-bottom"><span class="price">$15.000</span><button class="plus" onclick="quickAdd('Vaso grande clásico',15000)">+</button></div></div>
+      </article>
+    </div>
+    <div class="custom-banner">
+      <div><h3>Creá tu propio vaso</h3><p><b>Vaso chico:</b> hasta 2 frutas y 2 salsas · <b>Vaso grande:</b> hasta 4 frutas y 4 salsas.</p></div>
+      <button class="btn" onclick="document.getElementById('vasoBuilder').scrollIntoView({behavior:'smooth'})">Personalizar ↓</button>
+    </div>
+    <div id="vasoBuilder" class="builder">
+      <div class="panel">
+        <h3>Personalizá tu vaso</h3>
+        <label class="field" for="cupSize">Elegí el tamaño</label>
+        <select id="cupSize" class="select" onchange="handleCupSizeChange()">
+          <option value="5000">Vaso chico personalizado — $5.000 (Máx. 2 frutas y 2 salsas)</option>
+          <option value="10000">Vaso grande personalizado — $10.000 (Máx. 4 frutas y 4 salsas)</option>
+        </select>
+
+        <div class="capacity-badges" style="margin-top:14px">
+          <span id="cupFruitsBadge" class="cap-badge">Frutas: 0 / 2</span>
+          <span id="cupSaucesBadge" class="cap-badge">Salsas: 0 / 2</span>
+        </div>
+
+        <div class="tray-options">
+          <details open><summary><span>Frutas</span><span class="item-price">$4.500 c/u</span></summary><div class="opts" id="cupFruits"></div></details>
+          <details><summary><span>Toppings clásicos</span><span class="item-price">$3.000 c/u</span></summary><div class="opts" id="cupClassic"></div></details>
+          <details><summary><span>Toppings especiales</span><span class="item-price">$7.000 c/u</span></summary><div class="opts" id="cupPremium"></div></details>
+          <details open><summary><span>Salsas clásicas</span><span class="item-price">$2.000 c/u</span></summary><div class="opts" id="cupClassicSauces"></div></details>
+          <details><summary><span>Salsas especiales</span><span class="item-price">$3.000 c/u</span></summary><div class="opts" id="cupPremiumSauces"></div></details>
+        </div>
+      </div>
+      <aside class="panel summary">
+        <h3>Tu vaso</h3>
+        <div class="sumrow"><span>Tamaño</span><b id="cupLabel">Chico</b></div>
+        <div class="sumrow"><span>Frutas</span><b id="cupFruitCount">0 / 2</b></div>
+        <div class="sumrow"><span>Salsas</span><b id="cupSauceCount">0 / 2</b></div>
+        <div class="sumrow"><span>Toppings extra</span><b id="cupToppingCount">0</b></div>
+        <div id="cupBreakdown" class="live-breakdown"></div>
+        <div class="total"><span>Total estimado</span><strong id="cupTotal">$5.000</strong></div>
+        <button class="btn wide" onclick="addCup(true)">Agregar vaso al carrito ↗</button>
+      </aside>
+    </div>
+  </section>
+
+  <!-- CARRITO -->
+  <section id="cart" class="view">
+    <div class="step-nav"><button class="btn outline" onclick="showView('menu')">⬅ Seguir comprando</button></div>
+    <div class="section-head">
+      <div class="eyebrow">Paso 1 de 2</div>
+      <h2>Mi carrito</h2>
+    </div>
+    <div class="order-card">
+      <div class="order-card-head">
+        <h3>Productos seleccionados</h3>
+        <button class="remove" onclick="clearCart()">Vaciar carrito</button>
+      </div>
+      <div id="cartItems"><p class="hint">Todavía no agregaste productos.</p></div>
+      <div class="order-total"><span>Total a transferir</span><strong id="cartTotal">$0</strong></div>
+      <button class="btn wide" onclick="openCheckoutDetails()">Continuar y generar pedido ↗</button>
+    </div>
+
+    <div id="checkoutDetails" class="checkout-details" hidden>
+      <div class="panel">
+        <div class="eyebrow">Datos para tu pedido</div>
+        <h3>¿A nombre de quién preparamos?</h3>
+        <label class="field" for="customer">Nombre y apellido</label>
+        <input id="customer" placeholder="Ej: Camila López">
+        <label class="field" for="phone">Número de WhatsApp</label>
+        <input id="phone" type="tel" placeholder="Ej: 11 2345 6789">
+        <p class="hint" style="margin-top:6px">Te escribiremos por WhatsApp en cuanto verifiquemos tu transferencia para coordinar el retiro.</p>
+        <button class="btn wide" style="margin-top:14px" onclick="generateTransferOrder()">Finalizar compra y ver datos de transferencia 💳</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANTALLA DE PAGO POR TRANSFERENCIA A NARANJA X -->
+  <section id="paymentView" class="view">
+    <div class="transfer-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <span id="orderStatusBadge" class="status-pill PENDIENTE_PAGO">⏳ Pendiente de pago</span>
+        <span style="font-weight:800;font-size:14px;color:var(--wine)">Pedido <span id="displayOrderNumber">#SB-0000</span></span>
+      </div>
+
+      <h2 style="font:600 28px 'Playfair Display';color:var(--wine);margin:6px 0 8px">Transferí a nuestra cuenta Naranja X</h2>
+      <p class="hint" style="margin:0">Realizá la transferencia desde tu billetera virtual o banco por el importe exacto y adjuntá el comprobante debajo.</p>
+
+      <div class="bank-box">
+        <div class="bank-row">
+          <div>
+            <div class="bank-label">Importe exacto a transferir</div>
+            <div class="bank-val amount-highlight" id="displayExactAmount">$0</div>
+          </div>
+          <button class="copy-btn" id="btnCopyAmount" onclick="copyText('rawAmount', 'btnCopyAmount', '¡Importe copiado!')">Copiar importe 📋</button>
+        </div>
+
+        <div class="bank-row">
+          <div>
+            <div class="bank-label">Alias Naranja X</div>
+            <div class="bank-val" id="displayAlias">GRUPO.LARUVV3.NX.ARS</div>
+          </div>
+          <button class="copy-btn" id="btnCopyAlias" onclick="copyText('alias', 'btnCopyAlias', '¡Alias copiado!')">Copiar alias 📋</button>
+        </div>
+
+        <div class="bank-row">
+          <div>
+            <div class="bank-label">CBU / CVU</div>
+            <div class="bank-val" id="displayCbu">4530000800010556426360</div>
+          </div>
+          <button class="copy-btn" id="btnCopyCbu" onclick="copyText('cbu', 'btnCopyCbu', '¡CBU copiado!')">Copiar CBU 📋</button>
+        </div>
+
+        <div class="bank-row">
+          <div>
+            <div class="bank-label">Nombre del titular</div>
+            <div class="bank-val" id="displayHolder">SugarBites · Cuenta Compartida Naranja X</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notice-banner">
+        <strong>Importante:</strong> Tu pedido <b>no pasará a preparación</b> hasta que verifiquemos que el dinero ingresó efectivamente en nuestra cuenta compartida de Naranja X.
+      </div>
+
+      <div id="receiptSection">
+        <div class="upload-zone" id="uploadZone">
+          <div style="font-size:28px">🧾</div>
+          <div style="font-weight:800;font-size:14px;color:var(--ink);margin-top:4px">¿Ya realizaste la transferencia?</div>
+          <p class="hint" style="margin:4px 0 8px">Adjuntá la captura de pantalla o PDF del comprobante</p>
+          <label class="upload-label" for="receiptInput">Seleccionar comprobante 📎</label>
+          <input type="file" id="receiptInput" accept="image/*,application/pdf" style="display:none" onchange="handleReceiptSelect(event)">
+          <div id="fileNameDisplay" style="font-size:12px;font-weight:700;color:var(--green);margin-top:8px"></div>
+          <img id="receiptPreview" class="receipt-preview" alt="Vista previa del comprobante">
+        </div>
+
+        <button id="btnSubmitReceipt" class="btn wide" style="margin-bottom:10px" onclick="submitReceipt()">Enviar comprobante de pago ✅</button>
+      </div>
+
+      <div id="postReceiptMessage" style="display:none;background:#f4f9fd;border:1px solid #b8d8f0;padding:16px;border-radius:14px;margin:16px 0;text-align:center">
+        <strong style="color:var(--info);font-size:15px;display:block;margin-bottom:6px">¡Comprobante recibido!</strong>
+        <p class="hint" style="margin:0 0 12px">Ya registramos tu comprobante. También podés enviarnos el aviso directo por correo/WhatsApp para agilizar la verificación en Naranja X.</p>
+        <button class="btn outline" style="font-size:12px;padding:9px 16px" onclick="notifySugarBitesMail()">Notificar a SugarBites por correo ✉️</button>
+      </div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;border-top:1px solid var(--sand);padding-top:16px">
+        <button id="btnCancelOrder" class="btn danger-outline" style="flex:1" onclick="cancelActiveOrder()">Cancelar pedido</button>
+        <button class="btn outline" style="flex:1" onclick="showView('home')">Volver al inicio</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL DE ADMINISTRACIÓN -->
+  <section id="adminView" class="view">
+    <div class="step-nav">
+      <button class="btn outline" onclick="showView('home')">⬅ Salir del panel</button>
+    </div>
+    <div class="section-head">
+      <div class="eyebrow">Control de ingresos Naranja X</div>
+      <h2>Pedidos SugarBites</h2>
+      <p>Verificá en tu app de Naranja X que el dinero haya ingresado antes de pasar el pedido a preparación.</p>
+    </div>
+
+    <div class="admin-filters">
+      <button class="filter-chip active" onclick="filterAdmin('ALL', this)">Todos</button>
+      <button class="filter-chip" onclick="filterAdmin('COMPROBANTE_ENVIADO', this)">🧾 Comprobante enviado</button>
+      <button class="filter-chip" onclick="filterAdmin('PENDIENTE_PAGO', this)">⏳ Pendiente de pago</button>
+      <button class="filter-chip" onclick="filterAdmin('PAGO_VERIFICADO', this)">✅ Pago verificado (Preparar)</button>
+      <button class="filter-chip" onclick="filterAdmin('CANCELADO', this)">🚫 Cancelados</button>
+    </div>
+
+    <div id="adminOrdersGrid" class="admin-grid"></div>
+  </section>
+</main>
+
+<!-- Barra flotante inferior -->
+<div class="floating-bar" id="floatingBar">
+  <div>
+    <span style="font-size:12px;color:var(--muted);display:block;">Total acumulado</span>
+    <span class="floating-total" id="floatingTotal">$0</span>
+  </div>
+  <button class="btn" onclick="showView('cart')">Finalizar compra 🛒</button>
+</div>
+
+<footer>
+  <b>SugarBites</b>
+  <p>UN ANTOJO, MIL COMBINACIONES ♡</p>
+  <button onclick="openAdminPanel()" style="background:none;border:0;color:#8e796d;font-size:11px;cursor:pointer;margin-top:8px">🔒 Gestión de pedidos</button>
+</footer>
+<div id="cartToast" class="cart-toast"></div>
+
+<script>
+// ============================================================================
+// DATOS DE LA CUENTA COMPARTIDA NARANJA X
+// ============================================================================
+const NARANJA_X_ACCOUNT = {
+  alias: 'GRUPO.LARUVV3.NX.ARS',
+  cbu: '4530000800010556426360',
+  holder: 'SugarBites · Cuenta Compartida Naranja X'
+};
+
+const money = n => Number(n || 0).toLocaleString('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 });
+const data = {
+  fruits: ['Frutilla', 'Banana', 'Durazno', 'Ananá', 'Arándanos', 'Uvas'],
+  classic: ['Mini pancakes', 'Mini waffles', 'Trufas', 'Brownie', 'Cubanitos de chocolate', 'Confites de chocolate (cereal)'],
+  premium: ['Marroc', 'Mini Block', 'Ferrero', 'Mini Oreo', 'Barrita Kinder'],
+  classicSauces: ['Chocolate', 'Chocolate con leche', 'Chocolate blanco', 'Dulce de leche', 'Caramelo', 'Crema'],
+  premiumSauces: ['Nutella', 'Pistacho', 'Block', 'Bon Bon', 'Leche condensada']
+};
+
+const builderQty = {
+  tray: {},
+  cup: {}
+};
+
+const TRAY_MAX_COMPARTMENTS = 5;
+const TRAY_MAX_SAUCES = 12;
+
+function getCupLimits() {
+  const isSmall = Number(document.getElementById('cupSize').value) === 5000;
+  return isSmall ? { fruits: 2, sauces: 2 } : { fruits: 4, sauces: 4 };
+}
+
+let cart = JSON.parse(localStorage.getItem('sb_cart') || '[]');
+let orders = JSON.parse(localStorage.getItem('sb_orders') || '[]');
+let activeOrderId = localStorage.getItem('sb_active_order') || null;
+let selectedReceiptDataUrl = null;
+let selectedReceiptName = '';
+let adminFilter = 'ALL';
+
+function saveState() {
+  localStorage.setItem('sb_cart', JSON.stringify(cart));
+  localStorage.setItem('sb_orders', JSON.stringify(orders));
+  if (activeOrderId) localStorage.setItem('sb_active_order', activeOrderId);
+  else localStorage.removeItem('sb_active_order');
+}
+
+function showToast(msg) {
+  const el = document.getElementById('cartToast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2300);
+}
+
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === id));
+  document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.nav === id));
+  const floatingBar = document.getElementById('floatingBar');
+  floatingBar.classList.toggle('hidden', ['cart', 'paymentView', 'adminView'].includes(id));
+  if (id === 'paymentView') renderPaymentView();
+  if (id === 'adminView') renderAdminOrders();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderStepperGroup(builderType, groupId, items, price) {
+  const container = document.getElementById(groupId);
+  container.innerHTML = items.map(name => {
+    const key = `${groupId}|${name}`;
+    const qty = builderQty[builderType][key] || 0;
+    return `
+      <div class="opt-stepper ${qty > 0 ? 'has-qty' : ''}" data-key="${key}">
+        <div class="opt-info">
+          <span class="opt-name">${name}</span>
+          <span class="opt-price">${money(price)} c/u</span>
+        </div>
+        <div class="stepper-btns">
+          <button type="button" aria-label="Restar ${name}" onclick="updateOptionQty('${builderType}', '${groupId}', '${name}', ${price}, -1)" ${qty === 0 ? 'disabled' : ''}>−</button>
+          <span class="stepper-qty">${qty}</span>
+          <button type="button" class="btn-plus" aria-label="Sumar ${name}" onclick="updateOptionQty('${builderType}', '${groupId}', '${name}', ${price}, 1)">+</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function initBuilders() {
+  renderStepperGroup('tray', 'trayClassic', data.classic, 3500);
+  renderStepperGroup('tray', 'trayPremium', data.premium, 7500);
+  renderStepperGroup('tray', 'trayFruits', data.fruits, 4500);
+  renderStepperGroup('tray', 'trayClassicSauces', data.classicSauces, 2000);
+  renderStepperGroup('tray', 'trayPremiumSauces', data.premiumSauces, 3000);
+
+  renderStepperGroup('cup', 'cupFruits', data.fruits, 4500);
+  renderStepperGroup('cup', 'cupClassic', data.classic, 3000);
+  renderStepperGroup('cup', 'cupPremium', data.premium, 7000);
+  renderStepperGroup('cup', 'cupClassicSauces', data.classicSauces, 2000);
+  renderStepperGroup('cup', 'cupPremiumSauces', data.premiumSauces, 3000);
+}
+
+function getGroupSums(builderType) {
+  const entries = Object.entries(builderQty[builderType]).filter(([, q]) => q > 0);
+  let compartments = 0;
+  let traySauces = 0;
+  let cupFruits = 0;
+  let cupSauces = 0;
+
+  entries.forEach(([key, q]) => {
+    const [group] = key.split('|');
+    if (builderType === 'tray') {
+      if (['trayClassic', 'trayPremium', 'trayFruits'].includes(group)) compartments += q;
+      if (['trayClassicSauces', 'trayPremiumSauces'].includes(group)) traySauces += q;
+    } else {
+      if (group === 'cupFruits') cupFruits += q;
+      if (['cupClassicSauces', 'cupPremiumSauces'].includes(group)) cupSauces += q;
+    }
+  });
+
+  return { compartments, traySauces, cupFruits, cupSauces };
+}
+
+function updateOptionQty(builderType, groupId, name, price, delta) {
+  const key = `${groupId}|${name}`;
+  const current = builderQty[builderType][key] || 0;
+  const next = current + delta;
+  if (next < 0) return;
+
+  if (delta > 0) {
+    const sums = getGroupSums(builderType);
+    if (builderType === 'tray') {
+      if (['trayClassic', 'trayPremium', 'trayFruits'].includes(groupId) && sums.compartments >= TRAY_MAX_COMPARTMENTS) {
+        return showToast(`La bandeja tiene máximo ${TRAY_MAX_COMPARTMENTS} compartimentos sólidos 🍓`);
+      }
+      if (['trayClassicSauces', 'trayPremiumSauces'].includes(groupId) && sums.traySauces >= TRAY_MAX_SAUCES) {
+        return showToast(`Podés agregar hasta ${TRAY_MAX_SAUCES} salsas aparte 🍫`);
+      }
+    } else {
+      const limits = getCupLimits();
+      if (groupId === 'cupFruits' && sums.cupFruits >= limits.fruits) {
+        return showToast(`Este vaso permite hasta ${limits.fruits} frutas 🍓`);
+      }
+      if (['cupClassicSauces', 'cupPremiumSauces'].includes(groupId) && sums.cupSauces >= limits.sauces) {
+        return showToast(`Este vaso permite hasta ${limits.sauces} salsas 🍫`);
+      }
+    }
+  }
+
+  builderQty[builderType][key] = next;
+  recalcAll();
+}
+
+function syncStepperDOM(builderType) {
+  const sums = getGroupSums(builderType);
+  const cupLimits = getCupLimits();
+
+  document.querySelectorAll(`#${builderType === 'tray' ? 'bandejaBuilder' : 'vasoBuilder'} .opt-stepper`).forEach(row => {
+    const key = row.dataset.key;
+    const [groupId] = key.split('|');
+    const qty = builderQty[builderType][key] || 0;
+
+    row.classList.toggle('has-qty', qty > 0);
+    row.querySelector('.stepper-qty').textContent = qty;
+    const [minusBtn, plusBtn] = row.querySelectorAll('button');
+    minusBtn.disabled = qty === 0;
+
+    let limitReached = false;
+    if (builderType === 'tray') {
+      if (['trayClassic', 'trayPremium', 'trayFruits'].includes(groupId)) {
+        limitReached = sums.compartments >= TRAY_MAX_COMPARTMENTS;
+      } else {
+        limitReached = sums.traySauces >= TRAY_MAX_SAUCES;
+      }
+    } else {
+      if (groupId === 'cupFruits') limitReached = sums.cupFruits >= cupLimits.fruits;
+      else if (['cupClassicSauces', 'cupPremiumSauces'].includes(groupId)) limitReached = sums.cupSauces >= cupLimits.sauces;
+    }
+    plusBtn.disabled = limitReached;
+  });
+}
+
+function getChosenItems(builderType) {
+  const priceMap = {
+    trayClassic: 3500, trayPremium: 7500, trayFruits: 4500, trayClassicSauces: 2000, trayPremiumSauces: 3000,
+    cupFruits: 4500, cupClassic: 3000, cupPremium: 7000, cupClassicSauces: 2000, cupPremiumSauces: 3000
+  };
+  return Object.entries(builderQty[builderType])
+    .filter(([, q]) => q > 0)
+    .map(([key, qty]) => {
+      const [group, name] = key.split('|');
+      const unitPrice = priceMap[group] || 0;
+      return { group, name, qty, unitPrice, subtotal: unitPrice * qty };
+    });
+}
+
+function renderBreakdown(target, items, baseLabel = '', basePrice = 0) {
+  const rows = [];
+  if (baseLabel) rows.push(`<div class="breakdown-line"><span>${baseLabel}</span><b>${money(basePrice)}</b></div>`);
+  items.forEach(x => rows.push(`<div class="breakdown-line"><span>${x.qty}x ${x.name}</span><b>${money(x.subtotal)}</b></div>`));
+  document.getElementById(target).innerHTML = rows.length ? rows.join('') : '<p class="hint">Usá + y − para sumar ingredientes.</p>';
+}
+
+function calcTray() {
+  const items = getChosenItems('tray');
+  const sums = getGroupSums('tray');
+  const total = items.reduce((s, x) => s + x.subtotal, 0);
+
+  document.getElementById('trayCompCount').textContent = `${sums.compartments} / ${TRAY_MAX_COMPARTMENTS}`;
+  document.getElementById('traySauceCount').textContent = `${sums.traySauces} ${sums.traySauces < 1 ? '(Mín. 1 req.)' : '(Máx. 12)'}`;
+
+  const compBadge = document.getElementById('trayCompartmentsBadge');
+  compBadge.textContent = `Sólidos: ${sums.compartments} / ${TRAY_MAX_COMPARTMENTS}`;
+  compBadge.classList.toggle('full', sums.compartments >= TRAY_MAX_COMPARTMENTS);
+
+  const sauceBadge = document.getElementById('traySaucesBadge');
+  sauceBadge.textContent = `Salsas (Mín. 1): ${sums.traySauces} / ${TRAY_MAX_SAUCES}`;
+  sauceBadge.classList.toggle('full', sums.traySauces >= 1);
+
+  document.getElementById('trayTotal').textContent = money(total);
+  renderBreakdown('trayBreakdown', items);
+  syncStepperDOM('tray');
+
+  return {
+    compartments: sums.compartments,
+    sauces: sums.traySauces,
+    total,
+    details: items.map(x => `${x.qty}x ${x.name}`)
+  };
+}
+
+function handleCupSizeChange() {
+  const limits = getCupLimits();
+  let fruitCount = 0;
+  let sauceCount = 0;
+  Object.keys(builderQty.cup).forEach(key => {
+    const [group] = key.split('|');
+    let q = builderQty.cup[key] || 0;
+    if (group === 'cupFruits') {
+      const allowed = Math.max(0, limits.fruits - fruitCount);
+      if (q > allowed) { builderQty.cup[key] = allowed; q = allowed; }
+      fruitCount += q;
+    } else if (['cupClassicSauces', 'cupPremiumSauces'].includes(group)) {
+      const allowed = Math.max(0, limits.sauces - sauceCount);
+      if (q > allowed) { builderQty.cup[key] = allowed; q = allowed; }
+      sauceCount += q;
+    }
+  });
+  calcCup();
+}
+
+function calcCup() {
+  const size = Number(document.getElementById('cupSize').value);
+  const limits = getCupLimits();
+  const items = getChosenItems('cup');
+  const sums = getGroupSums('cup');
+  const toppingsCount = items
+    .filter(x => ['cupClassic', 'cupPremium'].includes(x.group))
+    .reduce((s, x) => s + x.qty, 0);
+
+  const total = size + items.reduce((s, x) => s + x.subtotal, 0);
+
+  document.getElementById('cupLabel').textContent = size === 5000 ? 'Chico' : 'Grande';
+  document.getElementById('cupFruitCount').textContent = `${sums.cupFruits} / ${limits.fruits}`;
+  document.getElementById('cupSauceCount').textContent = `${sums.cupSauces} / ${limits.sauces}`;
+  document.getElementById('cupToppingCount').textContent = toppingsCount;
+
+  const fBadge = document.getElementById('cupFruitsBadge');
+  fBadge.textContent = `Frutas: ${sums.cupFruits} / ${limits.fruits}`;
+  fBadge.classList.toggle('full', sums.cupFruits >= limits.fruits);
+
+  const sBadge = document.getElementById('cupSaucesBadge');
+  sBadge.textContent = `Salsas: ${sums.cupSauces} / ${limits.sauces}`;
+  sBadge.classList.toggle('full', sums.cupSauces >= limits.sauces);
+
+  document.getElementById('cupTotal').textContent = money(total);
+  renderBreakdown('cupBreakdown', items, size === 5000 ? 'Vaso chico' : 'Vaso grande', size);
+  syncStepperDOM('cup');
+
+  return {
+    total,
+    details: items.map(x => `${x.qty}x ${x.name}`),
+    base: size
+  };
+}
+
+function recalcAll() { calcTray(); calcCup(); }
+
+function quickAdd(name, price) {
+  const existing = cart.find(i => i.name === name && i.details.length === 0);
+  if (existing) existing.qty += 1;
+  else cart.push({ name, unitPrice: price, details: [], qty: 1 });
+  saveState();
+  renderCart();
+  showToast(`${name} agregado al carrito 💗`);
+}
+
+function addTray(goCart) {
+  const x = calcTray();
+  if (x.compartments === 0) return alert('Elegí al menos un compartimento sólido para tu bandeja.');
+  if (x.sauces < 1) return alert('La bandeja debe incluir obligatoriamente al menos 1 salsa.');
+  
+  const totalItemsCount = x.compartments + x.sauces;
+  const trayDetails = getChosenItems('tray').map(i => `${i.qty}x ${i.name}`);
+
+  cart.push({ name: `Bandeja personalizada (${totalItemsCount} ítems)`, unitPrice: x.total, details: trayDetails, qty: 1 });
+  builderQty.tray = {};
+  calcTray();
+  saveState();
+  renderCart();
+  if (goCart) showView('cart');
+}
+
+function addCup(goCart) {
+  const x = calcCup();
+  cart.push({ name: 'Vaso ' + (x.base === 5000 ? 'chico' : 'grande') + ' personalizado', unitPrice: x.total, details: x.details, qty: 1 });
+  builderQty.cup = {};
+  calcCup();
+  saveState();
+  renderCart();
+  if (goCart) showView('cart');
+}
+
+// ============================================================================
+// CARRITO
+// ============================================================================
+function renderCart() {
+  const container = document.getElementById('cartItems');
+  if (!cart.length) {
+    container.innerHTML = '<p class="hint">Todavía no agregaste productos.</p>';
+  } else {
+    container.innerHTML = cart.map((x, i) => `
+      <div class="order-item">
+        <div class="order-item-main">
+          <div>
+            <b>${x.name}</b>
+            <small>${x.details.join(' · ') || 'Receta clásica'} · Unitario: ${money(x.unitPrice)}</small>
+          </div>
+          <strong>${money(x.unitPrice * x.qty)}</strong>
+        </div>
+        <div class="order-item-footer">
+          <span class="qty-control">
+            <button onclick="changeQty(${i}, -1)">−</button>
+            <span>${x.qty}</span>
+            <button onclick="changeQty(${i}, 1)">+</button>
+          </span>
+          <button class="remove" onclick="removeItem(${i})">Quitar</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  const total = cart.reduce((s, x) => s + x.unitPrice * x.qty, 0);
+  const count = cart.reduce((s, x) => s + x.qty, 0);
+  document.getElementById('cartTotal').textContent = money(total);
+  document.getElementById('floatingTotal').textContent = money(total);
+  document.getElementById('headerCount').textContent = count;
+
+  const activeOrder = orders.find(o => o.id === activeOrderId);
+  document.getElementById('btnActiveOrderHeader').style.display = activeOrder ? 'inline-block' : 'none';
+}
+
+function changeQty(i, d) {
+  cart[i].qty = Math.max(1, cart[i].qty + d);
+  saveState();
+  renderCart();
+}
+
+function removeItem(i) {
+  cart.splice(i, 1);
+  saveState();
+  renderCart();
+}
+
+function clearCart() {
+  cart = [];
+  saveState();
+  renderCart();
+  document.getElementById('checkoutDetails').hidden = true;
+}
+
+function openCheckoutDetails() {
+  if (!cart.length) return alert('Agregá al menos un producto al carrito.');
+  const box = document.getElementById('checkoutDetails');
+  box.hidden = false;
+  box.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ============================================================================
+// GENERACIÓN DE PEDIDO Y PANTALLA DE TRANSFERENCIA NARANJA X
+// ============================================================================
+function generateTransferOrder() {
+  const customer = document.getElementById('customer').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  if (!customer || !phone) return alert('Completá tu nombre y número de WhatsApp.');
+  if (!cart.length) return alert('El carrito está vacío.');
+
+  const total = cart.reduce((s, x) => s + x.unitPrice * x.qty, 0);
+  const orderNumber = 'SB-' + Math.floor(1000 + Math.random() * 9000);
+
+  const newOrder = {
+    id: orderNumber,
+    customer,
+    phone,
+    items: JSON.parse(JSON.stringify(cart)),
+    total,
+    status: 'PENDIENTE_PAGO',
+    receiptName: '',
+    receiptData: null,
+    createdAt: new Date().toLocaleString('es-AR')
+  };
+
+  orders.unshift(newOrder);
+  activeOrderId = orderNumber;
+  cart = [];
+  selectedReceiptDataUrl = null;
+  selectedReceiptName = '';
+
+  saveState();
+  renderCart();
+  showView('paymentView');
+}
+
+function renderPaymentView() {
+  const order = orders.find(o => o.id === activeOrderId);
+  if (!order) return showView('home');
+
+  document.getElementById('displayOrderNumber').textContent = '#' + order.id;
+  document.getElementById('displayExactAmount').textContent = money(order.total);
+  document.getElementById('displayAlias').textContent = NARANJA_X_ACCOUNT.alias;
+  document.getElementById('displayCbu').textContent = NARANJA_X_ACCOUNT.cbu;
+  document.getElementById('displayHolder').textContent = NARANJA_X_ACCOUNT.holder;
+
+  const badge = document.getElementById('orderStatusBadge');
+  badge.className = 'status-pill ' + order.status;
+
+  const statusLabels = {
+    PENDIENTE_PAGO: '⏳ Pendiente de pago',
+    COMPROBANTE_ENVIADO: '🧾 Comprobante enviado',
+    PAGO_VERIFICADO: '✅ Pago verificado (En preparación)',
+    CANCELADO: '🚫 Pedido cancelado'
+  };
+  badge.textContent = statusLabels[order.status] || order.status;
+
+  const receiptSection = document.getElementById('receiptSection');
+  const postMsg = document.getElementById('postReceiptMessage');
+  const cancelBtn = document.getElementById('btnCancelOrder');
+
+  if (order.status === 'PENDIENTE_PAGO') {
+    receiptSection.style.display = 'block';
+    postMsg.style.display = 'none';
+    cancelBtn.style.display = 'inline-block';
+  } else if (order.status === 'COMPROBANTE_ENVIADO') {
+    receiptSection.style.display = 'none';
+    postMsg.style.display = 'block';
+    cancelBtn.style.display = 'inline-block';
+  } else {
+    receiptSection.style.display = 'none';
+    postMsg.style.display = 'none';
+    cancelBtn.style.display = 'none';
+  }
+}
+
+function copyText(type, btnId, toastMsg) {
+  const order = orders.find(o => o.id === activeOrderId);
+  let textToCopy = '';
+  if (type === 'alias') textToCopy = NARANJA_X_ACCOUNT.alias;
+  else if (type === 'cbu') textToCopy = NARANJA_X_ACCOUNT.cbu;
+  else if (type === 'rawAmount' && order) textToCopy = String(order.total);
+
+  navigator.clipboard.writeText(textToCopy).then(() => {
+    const btn = document.getElementById(btnId);
+    const original = btn.textContent;
+    btn.classList.add('copied');
+    btn.textContent = '¡Copiado! ✓';
+    showToast(toastMsg);
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = original;
+    }, 2000);
+  });
+}
+
+function handleReceiptSelect(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  selectedReceiptName = file.name;
+  document.getElementById('fileNameDisplay').textContent = 'Archivo seleccionado: ' + file.name;
+  document.getElementById('uploadZone').classList.add('has-file');
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    selectedReceiptDataUrl = e.target.result;
+    const img = document.getElementById('receiptPreview');
+    if (file.type.startsWith('image/')) {
+      img.src = selectedReceiptDataUrl;
+      img.style.display = 'inline-block';
+    } else {
+      img.style.display = 'none';
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function submitReceipt() {
+  const order = orders.find(o => o.id === activeOrderId);
+  if (!order) return;
+  if (!selectedReceiptDataUrl) {
+    return alert('Por favor seleccioná primero la imagen o PDF de tu comprobante de transferencia.');
+  }
+
+  order.status = 'COMPROBANTE_ENVIADO';
+  order.receiptName = selectedReceiptName;
+  order.receiptData = selectedReceiptDataUrl;
+  saveState();
+  renderPaymentView();
+  showToast('¡Comprobante enviado! Aguardando verificación.');
+}
+
+function notifySugarBitesMail() {
+  const order = orders.find(o => o.id === activeOrderId);
+  if (!order) return;
+  const subject = encodeURIComponent(`Comprobante enviado - Pedido #${order.id} (${order.customer})`);
+  let body = `Hola SugarBites! Realicé la transferencia a la cuenta compartida de Naranja X.\n\n`;
+  body += `• Pedido: #${order.id}\n`;
+  body += `• Cliente: ${order.customer}\n`;
+  body += `• WhatsApp: ${order.phone}\n`;
+  body += `• Importe transferido: ${money(order.total)}\n\n`;
+  body += `Detalle:\n` + order.items.map(i => `- ${i.qty}x ${i.name}${i.details.length ? ' (' + i.details.join(', ') + ')' : ''} — ${money(i.unitPrice * i.qty)}`).join('\n');
+  window.location.href = `mailto:SugarBites.ba@gmail.com?subject=${subject}&body=${encodeURIComponent(body)}`;
+}
+
+function cancelActiveOrder() {
+  const order = orders.find(o => o.id === activeOrderId);
+  if (!order) return;
+  if (!confirm('¿Seguro que querés cancelar este pedido? No pasará a preparación.')) return;
+
+  order.status = 'CANCELADO';
+  saveState();
+  renderPaymentView();
+  showToast('Pedido cancelado.');
+}
+
+// ============================================================================
+// PANEL DE ADMINISTRACIÓN
+// ============================================================================
+function openAdminPanel() {
+  const pass = prompt('Ingresá la clave de administración de SugarBites (por defecto: sugarbites):');
+  if (pass === 'sugarbites') {
+    showView('adminView');
+  } else if (pass !== null) {
+    alert('Clave incorrecta.');
+  }
+}
+
+function filterAdmin(status, btn) {
+  adminFilter = status;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  renderAdminOrders();
+}
+
+function verifyOrderPayment(orderId) {
+  const order = orders.find(o => o.id === orderId);
+  if (!order) return;
+  if (!confirm(`¿Confirmás que ingresaron ${money(order.total)} en la cuenta compartida de Naranja X para el pedido #${order.id}?`)) return;
+  order.status = 'PAGO_VERIFICADO';
+  saveState();
+  renderAdminOrders();
+  showToast(`Pedido #${order.id} verificado y listo para preparar ✅`);
+}
+
+function cancelOrderFromAdmin(orderId) {
+  const order = orders.find(o => o.id === orderId);
+  if (!order) return;
+  if (!confirm(`¿Cancelar el pedido #${order.id}?`)) return;
+  order.status = 'CANCELADO';
+  saveState();
+  renderAdminOrders();
+}
+
+function renderAdminOrders() {
+  const grid = document.getElementById('adminOrdersGrid');
+  const filtered = adminFilter === 'ALL' ? orders : orders.filter(o => o.status === adminFilter);
+
+  if (!filtered.length) {
+    grid.innerHTML = '<p class="hint">No hay pedidos registrados en esta categoría.</p>';
+    return;
+  }
+
+  const labels = {
+    PENDIENTE_PAGO: '⏳ Pendiente de pago',
+    COMPROBANTE_ENVIADO: '🧾 Comprobante enviado',
+    PAGO_VERIFICADO: '✅ Pago verificado (Preparar)',
+    CANCELADO: '🚫 Cancelado'
+  };
+
+  grid.innerHTML = filtered.map(o => `
+    <div class="admin-card ${o.status === 'PAGO_VERIFICADO' ? 'verified' : o.status === 'COMPROBANTE_ENVIADO' ? 'sent' : ''}">
+      <span class="status-pill ${o.status}">${labels[o.status]}</span>
+      <h3 style="margin:4px 0;font-family:'Playfair Display';color:var(--wine)">#${o.id} · ${o.customer}</h3>
+      <div style="font-size:12px;color:var(--muted)">📱 WhatsApp: <b>${o.phone}</b></div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:10px">${o.createdAt}</div>
+
+      <div style="background:#fff;border:1px solid var(--sand);border-radius:10px;padding:10px;font-size:12px">
+        ${o.items.map(i => `
+          <div style="margin-bottom:4px">
+            <b>${i.qty}x ${i.name}</b> — ${money(i.unitPrice * i.qty)}
+            ${i.details && i.details.length ? `<br><small style="color:#777">${i.details.join(' · ')}</small>` : ''}
+          </div>
+        `).join('')}
+        <div style="border-top:1px solid var(--sand);margin-top:8px;padding-top:6px;font-weight:800;color:var(--wine);font-size:15px">
+          Total: ${money(o.total)}
+        </div>
+      </div>
+
+      ${o.receiptData ? `
+        <div style="margin-top:10px">
+          <div style="font-size:11px;font-weight:800;color:var(--info)">Comprobante adjunto (${o.receiptName}):</div>
+          ${o.receiptData.startsWith('data:image/')
+            ? `<img src="${o.receiptData}" style="width:100%;max-height:160px;object-fit:cover;border-radius:8px;margin-top:6px;border:1px solid var(--sand)">`
+            : `<a href="${o.receiptData}" download="${o.receiptName}" style="font-size:12px;color:var(--wine);font-weight:700">Descargar comprobante PDF</a>`
+          }
+        </div>
+      ` : ''}
+
+      <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+        ${(o.status === 'PENDIENTE_PAGO' || o.status === 'COMPROBANTE_ENVIADO') ? `
+          <button class="btn success" style="flex:1;padding:10px 12px;font-size:12px" onclick="verifyOrderPayment('${o.id}')">Verificar pago ✅</button>
+          <button class="btn danger-outline" style="padding:10px 12px;font-size:12px" onclick="cancelOrderFromAdmin('${o.id}')">Cancelar</button>
+        ` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  initBuilders();
+  recalcAll();
+  renderCart();
+});
+</script>
+</body>
+</html>
